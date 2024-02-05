@@ -10,58 +10,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TaxCalculator {
-    public static String employeeName; 
-    public static int employeeIncome; 
-    public static int employeeTax = 0; 
-
-    public static void main(String[] args) {
-        // initialize Scanners
-        Scanner scanName = new Scanner(System.in);
-        Scanner scanIncome = new Scanner(System.in); 
-
-        // get user input
-        System.out.print("Input employee's name:\n~ ");
-        employeeName = scanName.nextLine(); 
-
-        // check for proper name
-        for (int i = 0; i < employeeName.length(); i++) {
-            if (Character.isDigit(employeeName.charAt(i))) {
-                System.out.println("Employee Name invalid...");
-
-                // close scanners
-                scanIncome.close();
-                scanName.close();
-
-                // exit program
-                return; 
-            } 
-        }
-
-        // try catch handles when a user doesn't input a number
-        try {
-            System.out.print("\nInput employee's income:\n~ ");
-            employeeIncome = scanIncome.nextInt();
-
-            // program execution
-            if (employeeIncome >= 0) {
-                calcTax(); 
-                System.out.println("\nName: " + employeeName);
-                System.out.println(employeeName + "'s Income: " + employeeIncome);
-                System.out.println(employeeName + "'s Income Tax: " + employeeTax); 
-            }
-            else {
-                // runs when user input is less than 0
-                System.out.println("Invalid input, income should be zero or more");
-            }
-        }
-        catch(InputMismatchException e) {
-            System.out.println("Invalid input, income should be zero or more"); 
-        }
-
-        // close scanners
-        scanName.close();
-        scanIncome.close();
-    }
+    public  String employeeName; 
+    public  int employeeIncome = 0; 
+    public  int employeeTax = 0; 
 
     /*
      * Class method calcTax
@@ -70,7 +21,7 @@ public class TaxCalculator {
      * 
      * - Method uses employee's income to calculate the amount of tax they owe at the end of the year based off their salary. 
      */
-    public static void calcTax() {
+    public void calcTax() {
         if (employeeIncome != 0) {
             double hold = employeeIncome;   // variable used to keep track of income based on each calculation of taxed income
 
@@ -105,5 +56,57 @@ public class TaxCalculator {
             employeeTax += hold * .40; 
             return; 
         }
+    }
+    
+    public static void main(String[] args) {
+        // initializes tax calculator
+        TaxCalculator calculator = new TaxCalculator();
+
+        // initialize Scanners
+        Scanner scanName = new Scanner(System.in);
+        Scanner scanIncome = new Scanner(System.in); 
+
+        // get user input
+        System.out.print("Input employee's name:\n~ ");
+        calculator.employeeName = scanName.nextLine(); 
+
+        // check for proper name
+        for (int i = 0; i < calculator.employeeName.length(); i++) {
+            if (Character.isDigit(calculator.employeeName.charAt(i))) {
+                System.out.println("Employee Name invalid...");
+
+                // close scanners
+                scanIncome.close();
+                scanName.close();
+
+                // exit program
+                return; 
+            } 
+        }
+
+        // try catch handles when a user doesn't input a number
+        try {
+            System.out.print("\nInput employee's income:\n~ ");
+            calculator.employeeIncome = scanIncome.nextInt();
+
+            // program execution
+            if (calculator.employeeIncome >= 0) {
+                calculator.calcTax(); 
+                System.out.println("\nName: " + calculator.employeeName);
+                System.out.println(calculator.employeeName + "'s Income: " + calculator.employeeIncome);
+                System.out.println(calculator.employeeName + "'s Income Tax: " + calculator.employeeTax); 
+            }
+            else {
+                // runs when user input is less than 0
+                System.out.println("Invalid input, income should be zero or more");
+            }
+        }
+        catch(InputMismatchException e) {
+            System.out.println("Invalid input, income should be zero or more"); 
+        }
+
+        // close scanners
+        scanName.close();
+        scanIncome.close();
     }
 }
