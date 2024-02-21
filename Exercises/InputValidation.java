@@ -14,9 +14,7 @@ public class InputValidation {
         do {
             value = in.nextInt();
             // check for valid numerical input
-            if () {
-
-            }
+            
             // check for valid input in range
             if (value > b || value < a) {
                 System.out.print("Please enter a value in ["+a+","+b+"]: "); 
