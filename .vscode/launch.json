@@ -1,0 +1,57 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Arrays",
+            "request": "launch",
+            "mainClass": "Exercises.Arrays",
+            "projectName": "Zenisek_cpsc24500_31ce9fcc"
+        },
+        {
+            "type": "java",
+            "name": "InputValidation",
+            "request": "launch",
+            "mainClass": "Exercises.InputValidation",
+            "projectName": "Zenisek_cpsc24500_31ce9fcc"
+        },
+        {
+            "type": "java",
+            "name": "MyMath",
+            "request": "launch",
+            "mainClass": "Exercises.MyMath",
+            "projectName": "Zenisek_cpsc24500_31ce9fcc"
+        },
+        {
+            "type": "java",
+            "name": "RockPaperScissors",
+            "request": "launch",
+            "mainClass": "RockPaperScissors",
+            "projectName": "Zenisek_cpsc24500_31ce9fcc"
+        },
+        {
+            "type": "java",
+            "name": "TaxCalculator",
+            "request": "launch",
+            "mainClass": "TaxCalculator",
+            "projectName": "Zenisek_cpsc24500_31ce9fcc"
+        },
+        {
+            "type": "java",
+            "name": "Assignment4",
+            "request": "launch",
+            "mainClass": "a4.Assignment4",
+            "projectName": "Zenisek_cpsc24500_31ce9fcc",
+            "args": "a4/assignment4Data.txt"
+        }
+    ]
+}
