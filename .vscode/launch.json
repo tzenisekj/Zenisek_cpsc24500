@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Node",
+            "request": "launch",
+            "mainClass": "a5.Node",
+            "projectName": "Zenisek_cpsc24500_31ce9fcc"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
