@@ -113,27 +113,4 @@ public class Assignment5Node {
             return false; 
         }
     }
-
-    public static void main(String[] args) throws Exception {
-        Assignment5Node n = new Assignment5Node(); 
-        Assignment5Node n2; 
-        try {
-            n2 = new Assignment5Node(100,-99); 
-        }
-        catch(Exception e) {
-            System.out.println(e.getMessage());
-            n2 = new Assignment5Node();  
-        }
-        Assignment5Node n3 = new Assignment5Node(n2); 
-
-        System.out.println(n.toString()); 
-        try {
-            n2.add(n3);
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage()); 
-        }
-
-        System.out.println(n2.toString());
-    }
 }
