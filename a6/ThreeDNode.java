@@ -65,7 +65,7 @@ public class ThreeDNode extends Node {
 
     @Override
     public String toString() {
-        return "X: " + String.valueOf(getX()) + ", Y: " + String.valueOf(getY()) + ", Z: " + String.valueOf(getZ()); 
+        return "(" + String.valueOf(getX()) + "," + String.valueOf(getY()) + "," + String.valueOf(getZ()) + ")"; 
     }
 
     @Override

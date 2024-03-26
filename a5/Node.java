@@ -60,10 +60,12 @@ public class Node implements INode {
 		return x;
 	}
 
-	public void setX(int x) throws Exception {
+	public void setX(int x) throws Exception { 
 		if (isValidX(x))
 			this.x = x;
-		throw new Exception("Invalid operation: x value shoud be in the range: ["+LOWER_LIMIT+","+UPPER_LIMIT+"]");
+		else {
+			throw new Exception("Invalid operation: x value shoud be in the range: ["+LOWER_LIMIT+","+UPPER_LIMIT+"]");
+		}
 	}
 
 	public int getY() {
@@ -73,7 +75,9 @@ public class Node implements INode {
 	public void setY(int y) throws Exception {
 		if (isValidY(y))
 			this.y = y;
-		throw new Exception("Invalid operation: y value shoud be in the range: ["+LOWER_LIMIT+","+UPPER_LIMIT+"]");
+		else {
+			throw new Exception("Invalid operation: y value shoud be in the range: ["+LOWER_LIMIT+","+UPPER_LIMIT+"]");
+		}
 	}
 	public void add(Node node) throws Exception {
 		if (isValidX(this.x+node.getX()) && isValidY(this.y+node.getY()) ) {

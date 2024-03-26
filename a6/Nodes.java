@@ -1,9 +1,11 @@
 package a6;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.Random;
-import a5.Node; 
+import java.util.Random; 
+
+import a5.Node;
 
 public class Nodes {
     private ArrayList<INode> list; 
@@ -17,13 +19,13 @@ public class Nodes {
             list.clear();
 
         Random r = new Random();
-		int numNodes = size + r.nextInt(size - 1);
+		int numNodes = r.nextInt(size);
 
         for (int i = 0; i < numNodes; i++) {
             list.add(NodeFactory.getNode()); 
         }
-
-        for (int i = numNodes; i < size; i++) {
+ 
+        for (int i = numNodes; i < size; i++) { 
             list.add(NodeFactory.getThreeDNode()); 
         }
     }
@@ -36,7 +38,7 @@ public class Nodes {
         }
 
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) instanceof Node) {
+            if (!(list.get(i) instanceof ThreeDNode)) {
                 result += 1; 
             }
         }
@@ -80,14 +82,36 @@ public class Nodes {
     }
 
     public void sort() {
-
+        Collections.sort(list, new Sorter());
     }
 
     private class Sorter implements Comparator {
         @Override
         public int compare(Object o1, Object o2) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'compare'");
+            if (o1 instanceof ThreeDNode && o2 instanceof ThreeDNode) {
+                ThreeDNode n1 = (ThreeDNode) o1; 
+                ThreeDNode n2 = (ThreeDNode) o2;
+
+                return (n1.getX() + n1.getY() + n1.getZ()) - (n2.getX() + n2.getY() + n2.getZ()); 
+            }
+            else if (o1 instanceof ThreeDNode && !(o2 instanceof ThreeDNode)) {
+                ThreeDNode n1 = (ThreeDNode) o1; 
+                Node n2 = (Node) o2;
+
+                return (n1.getX() + n1.getY() + n1.getZ()) - (n2.getX() + n2.getY());
+            }
+            else if (!(o1 instanceof ThreeDNode) && o2 instanceof ThreeDNode) {
+                Node n1 = (Node) o1; 
+                ThreeDNode n2 = (ThreeDNode) o2;
+
+                return (n1.getX() + n1.getY()) - (n2.getX() + n2.getY() + n2.getZ());
+            }
+            else {
+                Node n1 = (Node) o1; 
+                Node n2 = (Node) o2;
+
+                return (n1.getX() + n1.getY()) - (n2.getX() + n2.getY());
+            }
         }
         
     }
