@@ -1,11 +1,13 @@
 package a7;
 
-public class Complex implements Comparable {
+import java.util.Scanner;
+
+public class Complex implements Comparable<Complex> {
     private double a,b; 
     
     Complex() {
-        a = 0; 
-        b = 0; 
+        this.a = 0; 
+        this.b = 0; 
     }
 
     Complex(double a) {
@@ -23,11 +25,11 @@ public class Complex implements Comparable {
     }
 
     public double getRealPart() {
-        return a; 
+        return this.a; 
     }
 
     public String getImaginaryPart() {
-        return String.valueOf(b) + "i"; 
+        return String.valueOf(this.b) + "i"; 
     }
 
     public Complex add(Complex cNum) {
@@ -70,16 +72,68 @@ public class Complex implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compareTo'");
+    public int compareTo(Complex c) {
+        return (int)this.abs() - (int)c.abs(); 
     }
 
     public static void main(String[] args) {
-        Complex c1 = new Complex(3.5, 5.5); 
-        Complex c2 = new Complex(-3.5, 1.0); 
+        // variables 
+        double input1 = 0, input2 = 0, input3 = 0, input4 = 0; 
+        Scanner s = new Scanner(System.in); 
+        
+        // gets user input
+        // catches if user inputs none numerical value
+        try{
+            System.out.print("Input first number number.\n~"); 
+            input1 = s.nextDouble(); 
+            System.out.print("Input second imaginary number.\n~"); 
+            input2 = s.nextDouble(); 
 
-        c1.add(c2); 
-        System.out.println(c1.toString()); 
+            System.out.print("\nInput first number number.\n~"); 
+            input3 = s.nextDouble(); 
+            System.out.print("Input second imaginary number.\n~"); 
+            input4 = s.nextDouble();
+        }
+        catch (Exception e) {
+            // exists code with error
+            System.out.println("\nError found"); 
+            System.exit(-1);
+            s.close();
+        }
+
+        // object initialization using variable constructor
+        Complex c1 = new Complex(input1, input2); 
+        Complex c2 = new Complex(input3, input4); 
+    
+        // displays first complex number and each part of it
+        System.out.println("\nFirst Complex Number: " + c1.toString()); 
+        System.out.println("Real number part of first Complex Number: " + c1.getRealPart()); 
+        System.out.println("Imaginary number part of First Complex Number: " + c1.getImaginaryPart());
+        
+        // displays second complex number and each part of it
+        System.out.println("\nSecond Complex Number: " + c2.toString()); 
+        System.out.println("Real number part of second Complex Number: " + c2.getRealPart()); 
+        System.out.println("Imaginary number part of second Complex Number: " + c2.getImaginaryPart());
+
+        // displays each operation of complex numbers and their returned values
+        System.out.println("\n" + c1.toString() + " + " + c2.toString() + " = " + c1.add(c2).toString()); 
+        System.out.println(c1.toString() + " - " + c2.toString() + " = " + c1.subtract(c2).toString());
+        System.out.println(c1.toString() + " * " + c2.toString() + " = " + c1.multiply(c2).toString());
+        System.out.println(c1.toString() + " / " + c2.toString() + " = " + c1.divide(c2).toString()); 
+
+        // displays the absolute values of each complex number
+        System.out.println("\nAbsolute value of " + c1.toString() + " = " + c1.abs());
+        System.out.println("Asbolute value of " + c2.toString() + " = " + c2.abs()); 
+ 
+        // processes comparison functionality with complex numbers
+        if (c1.compareTo(c2) >= 0) {
+            System.out.println(c1.toString() + " is greater than " + c2.toString()); 
+        }
+        else {
+            System.out.println(c2.toString() + " is greater than " + c1.toString());
+        }
+
+        // closes scanner
+        s.close();
     }
 }
