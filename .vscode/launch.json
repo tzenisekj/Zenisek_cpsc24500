@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Complex",
+            "request": "launch",
+            "mainClass": "a7.Complex",
+            "projectName": "Zenisek_cpsc24500_31ce9fcc"
+        },
+        {
+            "type": "java",
             "name": "Driver",
             "request": "launch",
             "mainClass": "a6.Driver",
