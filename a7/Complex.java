@@ -123,7 +123,7 @@ public class Complex implements Comparable<Complex> {
 
         // displays the absolute values of each complex number
         System.out.println("\nAbsolute value of " + c1.toString() + " = " + c1.abs());
-        System.out.println("Asbolute value of " + c2.toString() + " = " + c2.abs()); 
+        System.out.println("Asbolute value of " + c2.toString() + " = " + c2.abs() + "\n"); 
  
         // processes comparison functionality with complex numbers
         if (c1.compareTo(c2) >= 0) {
