@@ -1,37 +1,134 @@
 package a7;
 
+/*
+ * Class "Complex" is a class representation for a complex number in the form (a + bi).
+ * 
+ * Complex inherites Comparable for compareTo function
+ * 
+ * two double variables hold the values of a and b where "i" stands for imaginary
+ * 
+ * 4 Constructors
+ * - Default Constructor: Complex()
+ *      * Sets a and b = 0.0
+ * - 1 param Constructor: Complex(double a)
+ *      * Takes in double value for a and sets a = to that value
+ *      * b is set = to 0.0
+ * - 2 param Constructor: Complex(double a, double b)
+ *      * Takes in two parameters for a and b and sets those 
+ *        values accordingly
+ * - Copy Construcotr: Complex(Complex cNum)
+ *      * cNum is another complex number to copy the values of a
+ *        and b from
+ * 
+ * Methods
+ * - getRealPart()
+ *      * Returns the value of a
+ * - getImaginaryPart()
+ *      * Returns the value of b as a string in the form of (bi)
+ *        where "i" is put in place to stand for the imaginary
+ *        number
+ * - add(Complex cNum)
+ *      * takes in another complex number and returns a new 
+ *        complex number as a result of doing complex number
+ *        addition with the passed complex number and the called
+ *        instance
+ *      * Returns a new Complex Number
+ * - subtract(Complex cNum)
+ *      * takes in another complex number and returns a new 
+ *        complex number as a result of doing complex number
+ *        subtraction with the passed complex number and the 
+ *        called instance
+ *      * Returns a new Complex Number
+ * - multiply(Complex cNum)
+ *      * takes in another complex number and returns a new 
+ *        complex number as a result of doing complex number
+ *        multiplication with the passed complex number and the
+ *        called instance
+ *      * Returns a new Complex Number
+ * - divide(Complex cNum)
+ *      * takes in another complex number and returns a new 
+ *        complex number as a result of doing complex number
+ *        division with the passed complex number and the called
+ *        instance
+ *      * Returns a new Complex Number
+ * - abs()
+ *      * Returns the double value from calculating the absolute
+ *        value of the given complex number
+ * - toString()
+ *      * Returns the String representation of the complex
+ *        number in the format (a + bi)
+ * - @Override
+ * - compareTo(Complex cNum)
+ *      * Override compareTo function from comparable to proide
+ *        sorting logic and comparison between two complex 
+ *        numbers using their absolute values. 
+ *      * Returns the differene of the two absolute values given
+ *        by the two complex numbers being compared
+ */
+
 import java.util.Scanner;
 
 public class Complex implements Comparable<Complex> {
     private double a,b; 
     
+    /**
+     * Default constructor
+     * sets a and b to 0.0
+     **/
     Complex() {
         this.a = 0; 
         this.b = 0; 
     }
 
+    /**
+     * constructor to only set a value
+     * @param a double value for real part of complex number
+     */
     Complex(double a) {
         this.a = a; 
+        this.b = 0.0; 
     }
 
+    /**
+     * constructor to set both a and b values
+     * @param a double value for real part of complex number
+     * @param b double value for imaginary part of complex num
+     */
     Complex(double a, double b) {
         this.a = a; 
         this.b = b; 
     }
 
+    /**
+     * copy constructor
+     * @param cNum complex number to copy values of a and b from
+     */
     Complex(Complex cNum) {
         this.a = cNum.a; 
         this.b = cNum.b; 
     }
 
+    /**
+     * provides real part of the complex number
+     * @return a value as double
+     */
     public double getRealPart() {
         return this.a; 
     }
 
+    /**
+     * provides the imaginary part of the complex number
+     * @return b value as String to tack on "i" to number
+     */
     public String getImaginaryPart() {
         return String.valueOf(this.b) + "i"; 
     }
 
+    /**
+     * method performs complex number addittion
+     * @param cNum another complex number
+     * @return a new complex number from complex number addittion
+     */
     public Complex add(Complex cNum) {
         Complex c = new Complex(); 
         c.a = this.a + cNum.a; 
@@ -39,6 +136,11 @@ public class Complex implements Comparable<Complex> {
         return c; 
     }
 
+    /**
+     * method performs complex number subtraction
+     * @param cNum another complex number
+     * @return a new complex number from complex number subtraction
+     */
     public Complex subtract(Complex cNum) {
         Complex c = new Complex(); 
         c.a = this.a - cNum.a; 
@@ -46,6 +148,11 @@ public class Complex implements Comparable<Complex> {
         return c; 
     }
 
+    /**
+     * method performs complex number multiplication
+     * @param cNum another complex number
+     * @return a new complex number from complex number multiplication
+     */
     public Complex multiply(Complex cNum) {
         Complex c = new Complex(); 
         c.a = (this.a * cNum.a) - (this.b * cNum.b); 
@@ -53,6 +160,11 @@ public class Complex implements Comparable<Complex> {
         return c; 
     }
 
+    /**
+     * method performs complex number division
+     * @param cNum another complex number
+     * @return a new complex number from complex number division
+     */
     public Complex divide(Complex cNum) {
         Complex c = new Complex(); 
         c.a = ((this.a * cNum.a + this.b * cNum.b) / (cNum.a * cNum.a + cNum.b * cNum.b));
@@ -60,10 +172,18 @@ public class Complex implements Comparable<Complex> {
         return c; 
     }
 
+    /**
+     * method calculates the aboslute value of the complex number
+     * @return double value of absolute value of complex number
+     */
     public double abs() {
         return Math.sqrt((a * a) + (b * b)); 
     }
 
+    /**
+     * @return String representation of complex number in form (a + bi)
+     * if complex number has b value of 0.0 then String representation is in the form of (a)
+     */
     public String toString() {
         if (b == 0)
             return "(" + String.valueOf(a) + ")"; 
@@ -71,11 +191,22 @@ public class Complex implements Comparable<Complex> {
             return "(" + String.valueOf(a) + " + " + String.valueOf(b) + "i)";  
     }
 
+    /** method overrides compareTo from Comparable 
+     * - Needed for complex number sorting and comparisons
+     * @return differenc of two complex numbers based on their abolute values
+     */
     @Override
     public int compareTo(Complex c) {
         return (int)this.abs() - (int)c.abs(); 
     }
 
+    /**
+     * 
+     * @param args array of possible arguments for main function
+     * function main handles test program
+     * - program uses scanner to get a users input for two complex numbers
+     * - program then displays all operations and class methods for two complex numbers
+     */
     public static void main(String[] args) {
         // variables 
         double input1 = 0, input2 = 0, input3 = 0, input4 = 0; 
