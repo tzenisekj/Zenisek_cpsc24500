@@ -25,7 +25,7 @@ class LoginFrame extends JDialog {
     private final JLabel lblPassword = new JLabel("Password");
 
     private final JTextField txtUsername = new JTextField(15);
-    private final JPasswordField txtPassword = new JPasswordField();
+    private final JPasswordField txtPassword = new JPasswordField(15);
 
     private final JButton btnLogin = new JButton("Login");
     private final JButton btnCancel = new JButton("Cancel");
@@ -40,24 +40,27 @@ class LoginFrame extends JDialog {
         super(parent, "Log in window");
        
         //code for creating the frame needed here...
-        setBounds(500,200,500,200);
+        setBounds(300,150,300,150);
         setLocationRelativeTo(null);
 		
         // setting up components
         Container c = this.getContentPane(); 
         c.setLayout(new BorderLayout());
         
-        JPanel input = new JPanel(); 
-        input.add(lblUsername);
-        input.add(lblPassword);
-        input.add(txtUsername);
-        input.add(txtPassword);
+        JPanel usernameInput = new JPanel();
+        usernameInput.add(lblUsername);
+        usernameInput.add(txtUsername);
+        
+        JPanel passwordInput = new JPanel();
+        passwordInput.add(lblPassword);
+        passwordInput.add(txtPassword);
         
         JPanel buttons = new JPanel();
         buttons.add(btnLogin); 
         buttons.add(btnCancel);
-        
-        c.add(input, BorderLayout.CENTER);
+ 
+        c.add(usernameInput, BorderLayout.NORTH);
+        c.add(passwordInput, BorderLayout.CENTER);
         c.add(buttons, BorderLayout.SOUTH);
         
         btnLogin.addActionListener(new ActionListener() {
@@ -71,11 +74,12 @@ class LoginFrame extends JDialog {
                     parent.setVisible(true);
                     //Uncomment when MainWindow is ready (or Whatever you call the Main Frame for the application)
                     //((MainWindow) parent).endableAll(); 
+                    txtPassword.setText("");
+                    txtUsername.setText("");
                     setVisible(false);
                 } else {
                 	//play around with the options
                 	JOptionPane.showMessageDialog(null, "Incorrect username/password", "Login", JOptionPane.ERROR_MESSAGE );
-
                 }
             }
 
