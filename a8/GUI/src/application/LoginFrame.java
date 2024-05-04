@@ -73,7 +73,7 @@ class LoginFrame extends JDialog {
                 if (verifyLogin(strUsername, strPassword)) {
                     parent.setVisible(true);
                     //Uncomment when MainWindow is ready (or Whatever you call the Main Frame for the application)
-                    //((MainWindow) parent).endableAll(); 
+                    ((MainFrame) parent).enableAll(); 
                     txtPassword.setText("");
                     txtUsername.setText("");
                     setVisible(false);
@@ -100,7 +100,6 @@ class LoginFrame extends JDialog {
             	txtPassword.setText("");
             	txtUsername.setText("");
                 setVisible(false);
-            
             }
         });
     }

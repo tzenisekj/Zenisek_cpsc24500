@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -50,7 +51,7 @@ public class MainFrame extends JFrame {
 	private final JLabel lblExerciseWallHeight = new JLabel("Wall Height");
 	private final JLabel lblExerciseRepititions = new JLabel("Repititions");
 	private final JLabel lblExerciseWeightLifted = new JLabel("Weight Lifted");
-	private final JLabel lblExerciseComment = new JLabel("Comment");
+	private final JLabel lblExerciseComment = new JLabel("Add Comment");
 	private final JLabel lblExerciseSummary = new JLabel("Exercise Summary"); 
 	
 	// text fields for user input
@@ -163,6 +164,64 @@ public class MainFrame extends JFrame {
 		return weightLiftingPanel; 
 	}
 	
+	public void enableAll() {
+		cBox.setEnabled(true);
+		if (cBox.getSelectedItem().equals("RunWalk")) {
+			txtExerciseName.setEnabled(true);
+			txtExerciseDate.setEnabled(true);
+			txtExerciseDuration.setEnabled(true);
+			txtExerciseDistance.setEnabled(true);
+			txtExerciseComment.setEnabled(true);
+			btnAddExercise.setEnabled(true);
+		}
+		else if (cBox.getSelectedItem().equals("RockClimbing")) {
+			txtExerciseName.setEnabled(true);
+			txtExerciseDate.setEnabled(true);
+			txtExerciseDuration.setEnabled(true);
+			txtExerciseRepititions.setEnabled(true);
+			txtExerciseWallHeight.setEnabled(true);
+			txtExerciseComment.setEnabled(true);
+			btnAddExercise.setEnabled(true);
+		}
+		else {
+			txtExerciseName.setEnabled(true);
+			txtExerciseDate.setEnabled(true);
+			txtExerciseDuration.setEnabled(true);
+			txtExerciseWeightLifted.setEnabled(true);
+			txtExerciseComment.setEnabled(true);
+			btnAddExercise.setEnabled(true);
+		}
+	}
+	
+	public void disableAll() {
+		cBox.setEnabled(false);
+		if (cBox.getSelectedItem().equals("RunWalk")) {
+			txtExerciseName.setEnabled(false);
+			txtExerciseDate.setEnabled(false);
+			txtExerciseDuration.setEnabled(false);
+			txtExerciseDistance.setEnabled(false);
+			txtExerciseComment.setEnabled(false);
+			btnAddExercise.setEnabled(false);
+		}
+		else if (cBox.getSelectedItem().equals("RockClimbing")) {
+			txtExerciseName.setEnabled(false);
+			txtExerciseDate.setEnabled(false);
+			txtExerciseDuration.setEnabled(false);
+			txtExerciseRepititions.setEnabled(false);
+			txtExerciseWallHeight.setEnabled(false);
+			txtExerciseComment.setEnabled(false);
+			btnAddExercise.setEnabled(false);
+		}
+		else {
+			txtExerciseName.setEnabled(false);
+			txtExerciseDate.setEnabled(false);
+			txtExerciseDuration.setEnabled(false);
+			txtExerciseWeightLifted.setEnabled(false);
+			txtExerciseComment.setEnabled(false);
+			btnAddExercise.setEnabled(false);
+		}
+	}
+	
 	// constructor to build frame
 	MainFrame() {
 		// adding items to menus
@@ -180,17 +239,22 @@ public class MainFrame extends JFrame {
 		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
 		
+		// creating layout for left side of frame for user input
 		JPanel leftPane = new JPanel();		
 		BoxLayout leftPaneLayout = new BoxLayout(leftPane, BoxLayout.Y_AXIS);
 		leftPane.setLayout(leftPaneLayout);
 	
+		// creating layout for right side of frame for displaying users exercises
 		JPanel rightPane = new JPanel();
 		BoxLayout rightPaneLayout = new BoxLayout(rightPane, BoxLayout.Y_AXIS);
 		rightPane.setLayout(rightPaneLayout);
 		
 		// setting user input area
+		leftPane.add(lblExerciseType);
 		leftPane.add(cBox);
-		leftPane.add(getRockClimbingInputPanel());
+		JPanel userInputPanel = new JPanel();
+		userInputPanel.add(getRunWalkInputPanel());
+		leftPane.add(userInputPanel);
 		
 		// setting comment sections
 		leftPane.add(lblExerciseComment);
@@ -221,12 +285,47 @@ public class MainFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// prompt logout frame to logout user
-				
+				disableAll();
 			}
 		});
 		
 		// listeners for add exercise button
+		btnAddExercise.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// check user input and add exercise done to list
+				
+			}
+		});
 		
+		// listener for combo box change
+		cBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// changes panel on change
+				
+				userInputPanel.removeAll();
+				
+				if (cBox.getSelectedItem().equals("RunWalk")) {
+					userInputPanel.add(getRunWalkInputPanel());
+				}
+				else if (cBox.getSelectedItem().equals("RockClimbing")) {
+					userInputPanel.add(getRockClimbingInputPanel());
+				}
+				else if (cBox.getSelectedItem().equals("WeightLifting")) {
+					userInputPanel.add(getWeightLiftingInputPanel());
+				}
+			}
+		});
+		
+		// disabling everything for login 
+		cBox.setEnabled(false);
+		txtExerciseName.setEnabled(false);
+		txtExerciseDate.setEnabled(false);
+		txtExerciseDuration.setEnabled(false);
+		txtExerciseDistance.setEnabled(false);
+		txtExerciseComment.setEnabled(false);
+		btnAddExercise.setEnabled(false);
 		
 	}
 	
