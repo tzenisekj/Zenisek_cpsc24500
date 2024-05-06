@@ -1,5 +1,6 @@
 package Modal;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class Exercise implements Comparable<Exercise>{
@@ -7,19 +8,34 @@ public abstract class Exercise implements Comparable<Exercise>{
     private String comment; 
     private double duration;  
     private Date date; 
-
-    Exercise(String name, double duration, Date date) {
-        this.name = name; 
-        this.duration = duration;
+    private SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+    
+    public Exercise(String name, Date date, double duration) {
+    	setName(name);
+        setDuration(duration);
         this.comment = ""; 
-        this.date = date; 
+        setDate(date);
+    }
+    
+    public Exercise(String name, String date, double duration) {
+    	setName(name);
+    	setDuration(duration);
+    	this.comment = "";
+    	setDate(date);
+    }
+    
+    public Exercise(String name, String date, double duration, String comment) {
+        setName(name);
+        setDuration(duration);
+        setComment(comment); 
+        setDate(date); 
     }
 
-    Exercise(String name, String comment, double duration, Date date) {
-        this.name = name; 
-        this.duration = duration;
-        this.comment = comment; 
-        this.date = date; 
+    public Exercise(String name, Date date, double duration, String comment) {
+    	setName(name);
+        setDuration(duration);
+        setComment(comment); 
+        setDate(date); 
     }
 
     // getters
@@ -33,13 +49,30 @@ public abstract class Exercise implements Comparable<Exercise>{
     public void setComment(String comment) { this.comment = comment; }
     public void setDuration(double duration) { this.duration = duration; }
     public void setDate(Date date) { this.date = date; }
-
-    public abstract double getCaloriesBurned();
-    public abstract Object getType(); 
-
-    public String toString() {
-        return ""; 
+    public void setDate() {
+    	this.date = new Date();
     }
+    public void setDate(String date) {
+		try {
+			this.date = df.parse(date);
+		} catch (Exception ex) {
+			this.date = new Date(); // now
+		}
+	}
+    
+    private String getDateAsString() {
+    	return df.format(date);
+    }
+    
+    // abstract methods
+    public abstract double getCaloriesBurned();
+    public abstract String getType(); 
+    public abstract String toStringCustomInfo();
+	
+	@Override
+	public String toString() {
+		return String.format("%s\t%s\t%s\t%.2f\t%s\t%.2f\t%s", name,getType(),getDateAsString(),duration,toStringCustomInfo(),getCaloriesBurned(),comment);
+	}
 
     @Override
     public int compareTo(Exercise o) {

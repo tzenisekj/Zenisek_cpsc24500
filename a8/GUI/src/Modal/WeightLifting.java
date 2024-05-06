@@ -5,14 +5,24 @@ import java.util.Date;
 public class WeightLifting extends Exercise {
     private double amountLifted; 
 
-    WeightLifting(String name, String comment, double amountLifted, double duration, Date date) {
-        super(name, comment, duration, date);
-        this.amountLifted = amountLifted;
+    public WeightLifting(String name, String date, double amountLifted, double duration, String comment) {
+        super(name, date, duration, comment);
+        setAmountLifted(amountLifted);
+    }
+    
+    public WeightLifting(String name, Date date, double amountLifted, double duration, String comment) {
+        super(name, date, duration, comment);
+        setAmountLifted(amountLifted);
     }
 
-    WeightLifting(String name, double amountLifted, double duration, Date date) {
-        super(name, duration, date);
-        this.amountLifted = amountLifted;
+    public WeightLifting(String name, Date date, double amountLifted, double duration) {
+        super(name, date, duration);
+        setAmountLifted(amountLifted); 
+    }
+    
+    public WeightLifting(String name, String date, double amountLifted, double duration) {
+        super(name, date, duration);
+        setAmountLifted(amountLifted); 
     }
     
     public double getAmountLifted() { return amountLifted; }
@@ -25,8 +35,12 @@ public class WeightLifting extends Exercise {
     }
 
     @Override
-    public Object getType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getType'");
+    public String getType() {
+        return "Weight Lifting";
+    }
+    
+    @Override
+    public String toStringCustomInfo() {
+    	return "";
     }
 }

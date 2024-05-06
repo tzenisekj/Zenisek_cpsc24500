@@ -6,16 +6,28 @@ public class RockClimbing extends Exercise {
     private int repititions; 
     private double heightOfWall; 
 
-    RockClimbing(String name, String comment, double heightOfWall, int repititions, double duration, Date date) {
-        super(name, comment, duration, date);
-        this.heightOfWall = heightOfWall; 
-        this.repititions = repititions; 
+    public RockClimbing(String name, String date, double duration, double heightOfWall, int repititions, String comment) {
+        super(name, date, duration, comment);
+        setHeightOfWall(heightOfWall);
+        setRepititions(repititions);     
+    }
+    
+    public RockClimbing(String name, Date date, double duration, double heightOfWall, int repititions, String comment) {
+        super(name, date, duration, comment);
+        setHeightOfWall(heightOfWall);
+        setRepititions(repititions);     
     }
 
-    RockClimbing(String name, double heightOfWall, int repititions, double duration, Date date) {
-        super(name, duration, date);
-        this.heightOfWall = heightOfWall; 
-        this.repititions = repititions; 
+    public RockClimbing(String name, String date, double heightOfWall, int repititions, double duration) {
+        super(name, date, duration);
+        setHeightOfWall(heightOfWall);
+        setRepititions(repititions); 
+    }
+    
+    public RockClimbing(String name, Date date, double heightOfWall, int repititions, double duration) {
+        super(name, date, duration);
+        setHeightOfWall(heightOfWall);
+        setRepititions(repititions); 
     }
 
     public int getRepititions() { return repititions; }
@@ -30,8 +42,12 @@ public class RockClimbing extends Exercise {
     }
 
     @Override
-    public Object getType() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getType'");
+    public String getType() {
+        return "Rock Climbing";
+    }
+    
+    @Override
+    public String toStringCustomInfo() {
+    	return "";
     }
 }
