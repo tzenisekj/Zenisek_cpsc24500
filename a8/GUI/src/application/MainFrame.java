@@ -486,7 +486,7 @@ public class MainFrame extends JFrame {
 				// constraints user to input double value
 				String currValue = txtExerciseDuration.getText().trim();
 				if (e.getKeyChar() == '.') {
-					if (currValue.contains(".") || currValue.length() == 0) {
+					if (currValue.contains(".")) {
 						e.consume();
 					}
 				}
@@ -506,7 +506,7 @@ public class MainFrame extends JFrame {
 				// constraints user to input double value
 				String currValue = txtExerciseDistance.getText().trim();
 				if (e.getKeyChar() == '.') {
-					if (currValue.contains(".") || currValue.length() == 0) {
+					if (currValue.contains(".")) {
 						e.consume();
 					}
 				}
@@ -526,7 +526,7 @@ public class MainFrame extends JFrame {
 				// constraints user to input double value
 				String currValue = txtExerciseWallHeight.getText().trim();
 				if (e.getKeyChar() == '.') {
-					if (currValue.contains(".") || currValue.length() == 0) {
+					if (currValue.contains(".")) {
 						e.consume();
 					}
 				}
@@ -546,7 +546,7 @@ public class MainFrame extends JFrame {
 				// constraints user to input double value
 				String currValue = txtExerciseWeightLifted.getText().trim();
 				if (e.getKeyChar() == '.') {
-					if (currValue.contains(".") || currValue.length() == 0) {
+					if (currValue.contains(".")) {
 						e.consume();
 					}
 				}
