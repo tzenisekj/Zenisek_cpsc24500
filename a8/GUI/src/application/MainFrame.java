@@ -3,6 +3,7 @@ package application;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Menu;
 import java.awt.MenuBar;
@@ -35,8 +36,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
 
 import Modal.Exercise;
+import Modal.ExerciseWriter;
 import Modal.RockClimbing;
 import Modal.RunWalk;
 import Modal.WeightLifting;
@@ -48,6 +51,10 @@ public class MainFrame extends JFrame {
 	
 	// variables
 	private String[] exerciseTypes = { "RunWalk", "RockClimbing", "WeightLifting" }; 
+	private ArrayList<Exercise> exerciseList = new ArrayList<>(); 
+	
+	// exercise writer
+	private ExerciseWriter exerciseWriter = new ExerciseWriter();
 	
 	// menu bar menus
 	private final Menu f = new Menu("File");
@@ -56,6 +63,8 @@ public class MainFrame extends JFrame {
 	// menu items for menu File
 	private final MenuItem m1 = new MenuItem("Login");
 	private final MenuItem m2 = new MenuItem("Logout");
+	private final MenuItem m3 = new MenuItem("Save Exercises");
+	private final MenuItem m4 = new MenuItem("Exit"); 
 	
 	// menu bar for main frame
 	private final MenuBar mb = new MenuBar(); 
@@ -303,7 +312,7 @@ public class MainFrame extends JFrame {
 		
 	}
 	
-	private void saveToFile(Exercise e) {
+	private void saveToFile() {
 		
 	}
 	
@@ -324,19 +333,22 @@ public class MainFrame extends JFrame {
 		if (cBox.getSelectedItem().equals("RunWalk")) {
 			RunWalk ne = new RunWalk(txtExerciseName.getText().trim(), txtExerciseDate.getText(), Double.parseDouble(txtExerciseDuration.getText()), Double.parseDouble(txtExerciseDistance.getText()), txtExerciseComment.getText().trim());
 			listModel.addElement(ne);
-			saveToFile(ne);
+			exerciseList.add(ne);
+			System.out.println("Updated List: " + ne.toString());
 			clearInput();
 		}
 		else if (cBox.getSelectedItem().equals("WeightLifting")) {
 			WeightLifting ne = new WeightLifting(txtExerciseName.getText().trim(), txtExerciseDate.getText(), Double.parseDouble(txtExerciseDuration.getText()), Double.parseDouble(txtExerciseWeightLifted.getText()), txtExerciseComment.getText().trim());
 			listModel.addElement(ne);
-			saveToFile(ne);
+			exerciseList.add(ne);
+			System.out.println("Updated List: " + ne.toString());
 			clearInput();
 		}
 		else if (cBox.getSelectedItem().equals("RockClimbing")) {
 			RockClimbing ne = new RockClimbing(txtExerciseName.getText().trim(), txtExerciseDate.getText(), Double.parseDouble(txtExerciseDuration.getText()), Double.parseDouble(txtExerciseWallHeight.getText()), Integer.parseInt(txtExerciseRepititions.getText()), txtExerciseComment.getText().trim());
 			listModel.addElement(ne);
-			saveToFile(ne);
+			exerciseList.add(ne);
+			System.out.println("Updated List: " + ne.toString()); 
 			clearInput();
 		}
 	}
@@ -346,6 +358,8 @@ public class MainFrame extends JFrame {
 		// adding items to menus
 		f.add(m1);
 		f.add(m2);
+		f.add(m3);
+		f.add(m4);
 		
 		// adding menus to menu bar
 		mb.add(f);
@@ -384,6 +398,8 @@ public class MainFrame extends JFrame {
 		// setting list of exercises
 		loadExercises();
 		listBox.setModel(listModel);
+		listBox.setCellRenderer(new ExerciseRenderer());
+		listBox.setFixedCellWidth(400);
 		
 		rightPane.add(lblExerciseSummary);
 		rightPane.add(listBox);
@@ -407,6 +423,24 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// prompt logout frame to logout user
 				disableAll();
+			}
+		});
+		
+		m3.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// save current exercises 
+				saveToFile();
+			}
+		});
+		
+		m4.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// prompt user to save entries
+				
+				// exit program
+				
 			}
 		});
 		
@@ -599,5 +633,16 @@ public class MainFrame extends JFrame {
 		app.setSize(800,600);
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setLocationRelativeTo(null); // Center the frame
+	}
+	
+	public class ExerciseRenderer extends JTextField implements ListCellRenderer<Exercise> {
+
+		@Override
+		public Component getListCellRendererComponent(JList<? extends Exercise> list, Exercise value, int index,
+				boolean isSelected, boolean cellHasFocus) {
+			setText(value.toString());
+			return this; 
+		}
+	     
 	}
 }
