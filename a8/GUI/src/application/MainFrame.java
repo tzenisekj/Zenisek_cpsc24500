@@ -1,8 +1,6 @@
 package application;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Menu;
@@ -10,25 +8,17 @@ import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputMethodEvent;
-import java.awt.event.InputMethodListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -53,8 +43,8 @@ public class MainFrame extends JFrame {
 	private String[] exerciseTypes = { "RunWalk", "RockClimbing", "WeightLifting" }; 
 	private ArrayList<Exercise> exerciseList = new ArrayList<>(); 
 	
-	// exercise writer
-	private ExerciseWriter exerciseWriter = new ExerciseWriter();
+	// file dialog
+	JFileChooser fileChooser = new JFileChooser();
 	
 	// menu bar menus
 	private final Menu f = new Menu("File");
@@ -63,8 +53,13 @@ public class MainFrame extends JFrame {
 	// menu items for menu File
 	private final MenuItem m1 = new MenuItem("Login");
 	private final MenuItem m2 = new MenuItem("Logout");
-	private final MenuItem m3 = new MenuItem("Save Exercises");
-	private final MenuItem m4 = new MenuItem("Exit"); 
+	private final MenuItem m3 = new MenuItem("Save");
+	private final MenuItem m4 = new MenuItem("Load");
+	private final MenuItem m5 = new MenuItem("Exit"); 
+	
+	// menu items for menu help
+	private final MenuItem h1 = new MenuItem("Can't Login");
+	private final MenuItem h2 = new MenuItem("Can't get program to add exercise");
 	
 	// menu bar for main frame
 	private final MenuBar mb = new MenuBar(); 
@@ -96,9 +91,8 @@ public class MainFrame extends JFrame {
 	// text area for user comment input
 	private final JTextArea txtExerciseComment = new JTextArea();
 	
-	// list box to store adding exercises
-	private JList<Exercise> listBox = new JList<>();
-	private	DefaultListModel<Exercise> listModel = new DefaultListModel<>();  
+	// text area for displaying exercises
+	private final JTextArea txtExerciseListSummary = new JTextArea();
 	
 	// buttons
 	private final JButton btnAddExercise = new JButton("Add Exercise");
@@ -224,6 +218,7 @@ public class MainFrame extends JFrame {
 	
 	public void disableAll() {
 		cBox.setEnabled(false);
+		txtExerciseListSummary.setEnabled(false);
 		if (cBox.getSelectedItem().equals("RunWalk")) {
 			txtExerciseName.setEnabled(false);
 			txtExerciseDate.setEnabled(false);
@@ -307,14 +302,7 @@ public class MainFrame extends JFrame {
 			return true; 
 		}
 	}
-	
-	private void loadExercises() {
-		
-	}
-	
-	private void saveToFile() {
-		
-	}
+
 	
 	private void clearInput() {
 		txtExerciseName.setText("");
@@ -332,26 +320,27 @@ public class MainFrame extends JFrame {
 	private void addExercise() {
 		if (cBox.getSelectedItem().equals("RunWalk")) {
 			RunWalk ne = new RunWalk(txtExerciseName.getText().trim(), txtExerciseDate.getText(), Double.parseDouble(txtExerciseDuration.getText()), Double.parseDouble(txtExerciseDistance.getText()), txtExerciseComment.getText().trim());
-			listModel.addElement(ne);
 			exerciseList.add(ne);
 			System.out.println("Updated List: " + ne.toString());
+			txtExerciseListSummary.setText(ExerciseWriter.tabulateSummary(exerciseList));
 			clearInput();
 		}
 		else if (cBox.getSelectedItem().equals("WeightLifting")) {
 			WeightLifting ne = new WeightLifting(txtExerciseName.getText().trim(), txtExerciseDate.getText(), Double.parseDouble(txtExerciseDuration.getText()), Double.parseDouble(txtExerciseWeightLifted.getText()), txtExerciseComment.getText().trim());
-			listModel.addElement(ne);
 			exerciseList.add(ne);
+			txtExerciseListSummary.setText(ExerciseWriter.tabulateSummary(exerciseList));
 			System.out.println("Updated List: " + ne.toString());
 			clearInput();
 		}
 		else if (cBox.getSelectedItem().equals("RockClimbing")) {
 			RockClimbing ne = new RockClimbing(txtExerciseName.getText().trim(), txtExerciseDate.getText(), Double.parseDouble(txtExerciseDuration.getText()), Double.parseDouble(txtExerciseWallHeight.getText()), Integer.parseInt(txtExerciseRepititions.getText()), txtExerciseComment.getText().trim());
-			listModel.addElement(ne);
 			exerciseList.add(ne);
+			txtExerciseListSummary.setText(ExerciseWriter.tabulateSummary(exerciseList));
 			System.out.println("Updated List: " + ne.toString()); 
 			clearInput();
 		}
 	}
+	
 	
 	// constructor to build frame
 	MainFrame() {
@@ -360,6 +349,10 @@ public class MainFrame extends JFrame {
 		f.add(m2);
 		f.add(m3);
 		f.add(m4);
+		f.add(m5);
+		
+		h.add(h1);
+		h.add(h2);
 		
 		// adding menus to menu bar
 		mb.add(f);
@@ -396,13 +389,9 @@ public class MainFrame extends JFrame {
 		c.add(leftPane, BorderLayout.WEST);
 		
 		// setting list of exercises
-		loadExercises();
-		listBox.setModel(listModel);
-		listBox.setCellRenderer(new ExerciseRenderer());
-		listBox.setFixedCellWidth(400);
-		
 		rightPane.add(lblExerciseSummary);
-		rightPane.add(listBox);
+		txtExerciseListSummary.setText("Name\tType\tDate\tCalories Burned\n=====================================================");
+		rightPane.add(txtExerciseListSummary);
 		c.add(rightPane, BorderLayout.EAST);
 		
 		// setting buttons
@@ -429,18 +418,76 @@ public class MainFrame extends JFrame {
 		m3.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// save current exercises 
-				saveToFile();
+				// prompt user to save exercises to specified file
+				if (exerciseList.size() == 0) { return; }
+				
+				fileChooser.setDialogTitle("Save To File");
+				int userSelection = fileChooser.showSaveDialog(c);
+				
+				if (userSelection == JFileChooser.APPROVE_OPTION) {
+					File selectedFile = fileChooser.getSelectedFile();
+					
+					if (ExerciseWriter.writeToFile(exerciseList, selectedFile)) {
+						// returns when exercises successfully saved
+						System.out.println("Successfully Saved");
+					}
+					else {
+						// returns if failed to save to selected file
+						System.out.println("Failed To save to file"); 
+					}
+				}
+				
 			}
 		});
 		
 		m4.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// prompt user to save entries
+				// prompt user to load exercises from file
 				
-				// exit program
+			}
+		});
+		
+		m5.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// prompt user to save if their are exercises to save
+				if (exerciseList.size() > 0) {
+					int userSelection = fileChooser.showSaveDialog(c);
+					
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+						File selectedFile = fileChooser.getSelectedFile();
+						
+						if (ExerciseWriter.writeToFile(exerciseList, selectedFile)) {
+							// returns when exercises successfully saved
+							System.out.println("Successfully Saved");
+						}
+						else {
+							// returns if failed to save to selected file
+							System.out.println("Failed to save to file"); 
+						}
+					}
+				}
 				
+				// close program
+				MainFrame.app.dispose();
+			}
+		});
+		
+		// setting event listener for help 
+		h1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// display help box
+				JOptionPane.showMessageDialog(null, "Username: healthy\nPassword: donut", "Login Help", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+		
+		h2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// display help box
+				JOptionPane.showMessageDialog(null, "1. The COMMENT text area is the only optional field. All others must be filled.", "Adding Exercises Help", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		
@@ -623,15 +670,14 @@ public class MainFrame extends JFrame {
 		
 		// styling list box
 		
-		
 	}
 	
 	public static void main(String[] args) {
 		app = new MainFrame(); 
 		app.setTitle("Exercise Tracker");
 		app.setVisible(true);
-		app.setSize(800,600);
-		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		app.setSize(800,425);
+		app.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		app.setLocationRelativeTo(null); // Center the frame
 	}
 	

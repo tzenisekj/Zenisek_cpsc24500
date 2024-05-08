@@ -1,3 +1,42 @@
+/*
+ * File: Exercise
+ * 
+ * This class acts as the parent class for different types of exercises somebody can enter to keep track of their exercises they perform. Currently
+ * RunWalk, WeightLifting, and RockClimbing are the subclass exercise types that extend exercise.
+ * 
+ * Exercise implements Comparable in order to define how sorting can be done with Exercise objects
+ * 
+ * Members
+ * - name: String
+ * - comment: String
+ * - duration: Double
+ * - date: Date (this uses date formatter to format mm/dd/yyyy
+ * - simpleDateFormat: SimpleDateFormat class
+ * 
+ * Constructors
+ * - PUBLIC	
+ * - Exercise(name, date (as Date), duration)
+ * - Exercise(name, date (as String), duration)
+ * - Exercise(name, date (as Date), duration, comment)
+ * - Exercise(name, date (as String), duration, comment)
+ * 
+ * Methods
+ * - getters for all members
+ * - settings for all members
+ * * Added toString setter for Date as string format and not Date object
+ * 
+ * Abstract Methods
+ * - toStringCustomInfo()
+ * - getCaloriesBurned()
+ * - getType()
+ * 
+ * Overridable Methods
+ * - toString()
+ * - comapare() ** overrides comparable method to define comparing exercises
+ * 
+ * Sub Class CompareByCaloriesBurned implementing Comparable
+ * ** needed to define comparing exercises by calories burned
+ */
 package Modal;
 
 import java.text.SimpleDateFormat;
@@ -60,7 +99,7 @@ public abstract class Exercise implements Comparable<Exercise>{
 		}
 	}
     
-    private String getDateAsString() {
+    public String getDateAsString() {
     	return df.format(date);
     }
     
