@@ -1,3 +1,9 @@
+/**
+ * file: LoginFrame
+ * 
+ * Custom Dialog that displays a frame dedicated to a user being able to login and use the application
+ * 
+ */
 package application;
 
 import java.awt.BorderLayout;
